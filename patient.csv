@@ -1,1 +1,11 @@
-hi there tulip hehehe 
+Patient_ID,Name,Age,Gender,Diseases,Doctor,Bill
+101,Aarav,24,Male,Fever,Dr.Sharma,1500
+102,Siya,35,Female,Diabetes,Dr.Gupta,5000
+103,Kabir,18,Male,Asthma,Dr.Singh,2500
+104,Ananya,42,Female,BP,Dr.Sharma,4500
+105,Tina,23,Female,Fever,Dr.Sharma,1800
+106,Rahul,28,Male,Diabetes,Dr.Gupta,3500
+107,Arjun,45,Male,Typhoid,Dr.Singh,2100
+108,Naina,33,Female,Asthma,Dr.Verma,3000
+109,Aisha,30,Female,Heart Diseases,Dr.Verma,12000
+110,Vivaan,15,Male,Allergy,Dr.Sharma,2300
