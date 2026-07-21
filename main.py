@@ -46,11 +46,11 @@ def display_graph():
 	df = pd.read_csv("patient.csv")
 	diseases_count = df["Diseases"].value_counts()
 	
-	plt.figure(figure=(8,5))
+	plt.figure(figsize=(8,5))
 	plt.bar(diseases_count.index, diseases_count.values)
 	
 	plt.title("Number of Patient for Each Diseases")
-	plt.xlabel("Dieases")
+	plt.xlabel("Diseases")
 	plt.ylabel("Number of patients")
 
 	plt.show()
