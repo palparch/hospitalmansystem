@@ -9,3 +9,4 @@ Patient_ID,Name,Age,Gender,Diseases,Doctor,Bill
 108,Naina,33,Female,Asthma,Dr.Verma,3000
 109,Aisha,30,Female,Heart Diseases,Dr.Verma,12000
 110,Vivaan,15,Male,Allergy,Dr.Sharma,2300
+111,Isha,23,Female ,Allergy,Dr.Gupta,2000

@@ -3,16 +3,16 @@ import matplotlib.pyplot as plt
 import csv
 
 #print menu
-print("-"*10, "HOSPITAL MANAGEMENT SYSTEM", "-"*10)
+print("="*10, "NOVACARE HOSPITAL MANAGEMENT SYSTEM", "="*10)
 print("~ please select an option ~")
 print("1. Display All Records ")
 print("2. Add a New Patient Record ")
 print("3. Search Patient with ID")
 print("4. Delete Patient Record ")
-print("5. Cialculate Bill ")
+print("5. Calculate Bill ")
 print("6. Display Graph ")
 print("7. Exit Program ")
-print("-"*20)
+print("="*57)
 
 choice = int(input("Enter your choice: "))
 
@@ -22,6 +22,8 @@ def display_records():
 	print(df)
 
 def add_patient():
+	df = pd.read_csv("patient.csv")
+
 	try:
 		pid = int(input("Patient ID: "))
 	except:
@@ -68,7 +70,7 @@ def display_graph():
 
 
 def exit_program():
-	print("Thank You")
+	print("Thanks for using NovaCare Hospital System, Have a Nice Day ")
 
 
 if choice == 1:
