@@ -2,8 +2,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import csv
 
-csvpath = "patient.csv"
-
 #print menu
 print("="*10, "NOVACARE HOSPITAL MANAGEMENT SYSTEM", "="*10)
 print("~ please select an option ~")
@@ -19,12 +17,12 @@ print("="*57)
 choice = int(input("Enter your choice: "))
 
 def display_records():
-	df = pd.read_csv(csvpath)
+	df = pd.read_csv("patient.csv")
 	print("\nPatient Records")
 	print(df)
 
 def add_patient():
-	df = pd.read_csv(csvpath)
+	df = pd.read_csv("patient.csv")
 
 	try:
 		pid = int(input("Patient ID: "))
@@ -40,12 +38,12 @@ def add_patient():
 	new_patient = {"Patient_ID": pid, "Name": name, "Age": age, "Gender": gender, "Diseases": diseases, "Doctor": doctor, "Bill": bill}
 
 	df.loc[len(df)] = new_patient
-	df.to_csv(csvpath, index=False)
+	df.to_csv("patient.csv", index=False)
 	print("\nPatient Successfully Added")
 
-def search_patient(pid):
-	df = pd.read_csv(csvpath)
-	print(df.loc[pid])
+#def search_patient(pid):
+#	df = pd.read_csv(csvpath)
+#	print(df.loc[pid])
 
 def delete_patient():
 	df = pd.read_csv(csvpath)
@@ -61,9 +59,10 @@ def delete_patient():
 	newdf.to_csv(csvpath, index=False)
 	
 	
+#def search_patient():					#ye tu karegi tulip
 #def calc_bill():						#ye tu karegi tulip
 def display_graph():
-	df = pd.read_csv(csvpath)
+	df = pd.read_csv("patient.csv")
 	diseases_count = df["Diseases"].value_counts()
 	
 	plt.figure(figsize=(8,5))
@@ -97,8 +96,8 @@ elif choice == 2:
 	add_patient()
 elif choice == 3:
 	# later, also add the ability to search by name
-	pid = int(input("Enter the patient ID to search: "))
-	search_patient(pid)
+	#pid = int(input("Enter the patient ID to search: "))
+	#search_patient(pid)
 elif choice == 4:
 	delete_patient()
 elif choice == 5:
