@@ -42,14 +42,33 @@ def add_patient():
 	gender = input("Gender: ")
 	diseases = input("Diseases: ") # maybe list diseases first 
 	doctor = input("Doctor: ") # list the number of docs first, depending on the disease(s)
+	# search doctor by name, get their ID, then:
+	# doc_ID = 
+	# and add it to the csv, for ease of calculating bill
+	# for now, im asking the user
+	doc_ID = int(input("Enter the doctor's ID: "))
 	bill = int(input("Bill: ")) # leave it, delete it because we'll calc the bill
 	date_of_reg = input("Enter the date of registration (DD-MM-YYY) (or leave empty for today's date): ")
-	# add the functionality to save the date in csv, for ease of room charge calculation
+	print("Does the patient require a stay at the hospital? ")
+	room_req = input("Leave blank if not needed, or type in something")
+	if room_req:
+		room_req = True
+	else:
+		room_req = False
 
 	if not date_of_reg:
 		date_of_reg = datetime.now().strftime("%d-%m-%Y")
 
-	new_patient = {"Patient_ID": pid, "Name": name, "Age": age, "Gender": gender, "Diseases": diseases, "Doctor": doctor, "Bill": bill}
+	new_patient = {
+			"Patient_ID": pid, 
+			"Name": name, 
+			"Age": age, 
+			"Gender": gender, 
+			"Diseases": diseases, 
+			"Doctor": doctor, 
+			"Doctor_ID": doc_ID,
+			"Room_Required": room_req
+			}
 
 	df.loc[len(df)] = new_patient
 	df.to_csv(csvpath, index=False)
@@ -57,7 +76,8 @@ def add_patient():
 
 def search_patient(pid):
 	df = pd.read_csv(csvpath)
-	print(df.loc[int(pid-100)].to_string())
+	patient = df.loc[int(pid-101)]
+	return patient
 
 def delete_patient():
 	df = pd.read_csv(csvpath)
@@ -112,7 +132,34 @@ def register_doctor():
 
 
 	
-#def calc_bill():
+def calc_bill():
+	docdf = pd.read_csv(csvpathdoc)
+	pdf = pd.read_csv(csvpath)
+	hospdf = pd.read_csv(csvpathhospital)
+
+	pid = int(input("Enter the patient ID to calculate bill: "))
+	patient = search_patient(pid)
+
+	doc_ID = patient['Doctor_ID']
+	consult_fee = docdf.loc[doc_ID]['Consultation_Fee']
+
+	reg_date = datetime.strptime(patient['Registered_Date'], "%d-%m-%Y").date()
+	today = datetime.today().date()
+
+	if patient.loc['Room_Required']:
+		room_charge = int(hospdf['Room_Charge'][0])
+	else:
+		room_charge = 0
+	num_of_days = int((today - reg_date).days)
+	total_room_charge = num_of_days*room_charge
+	
+	medicine_cost = int(input("Enter the medicine cost in integers only: "))
+	total_bill = consult_fee + total_room_charge + medicine_cost
+	print("days stayed is", num_of_days)
+	print("room charge per day is", room_charge)
+	print("so total room charge is", total_room_charge)
+	print("medicine cost is", medicine_cost)
+	print("so we have the total as ", total_bill)
 # here, lets do bill = consultation fee + room charge (if serious disease) + medicine charge.
 # medicine charge will be asked by the user, while consulation and room charge will be automatic.
 # consultation fee will be taken from doctors.csv
@@ -155,7 +202,7 @@ elif choice == 2:
 elif choice == 3:
 	# later, also add the ability to search by name
 	pid = int(input("Enter the patient ID to search: "))
-	search_patient(pid)
+	print(search_patient(pid))
 elif choice == 4:
 	delete_patient()
 elif choice == 5:
