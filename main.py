@@ -43,7 +43,10 @@ def add_patient():
 	df.to_csv(csvpath, index=False)
 	print("\nPatient Successfully Added")
 
-#def search_patient():
+def search_patient(pid):
+	df = pd.read_csv(csvpath)
+	print(df.loc[pid])
+
 def delete_patient():
 	df = pd.read_csv(csvpath)
 	pid = int(input("Enter the patient ID for the patient that you want to delete: "))
@@ -93,7 +96,9 @@ if choice == 1:
 elif choice == 2:
 	add_patient()
 elif choice == 3:
-	search_patient()
+	# later, also add the ability to search by name
+	pid = int(input("Enter the patient ID to search: "))
+	search_patient(pid)
 elif choice == 4:
 	delete_patient()
 elif choice == 5:
