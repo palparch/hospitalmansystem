@@ -1,12 +1,11 @@
 Patient_ID,Name,Age,Gender,Diseases,Doctor,Bill
-101,Aarav,24,Male,Fever,Dr.Sharma,1500
-102,Siya,35,Female,Diabetes,Dr.Gupta,5000
-103,Kabir,18,Male,Asthma,Dr.Singh,2500
-104,Ananya,42,Female,BP,Dr.Sharma,4500
-105,Tina,23,Female,Fever,Dr.Sharma,1800
-106,Rahul,28,Male,Diabetes,Dr.Gupta,3500
-107,Arjun,45,Male,Typhoid,Dr.Singh,2100
-108,Naina,33,Female,Asthma,Dr.Verma,3000
-109,Aisha,30,Female,Heart Diseases,Dr.Verma,12000
-110,Vivaan,15,Male,Allergy,Dr.Sharma,2300
-111,Isha,23,Female ,Allergy,Dr.Gupta,2000
+100,Aarav,24,Male,Fever,Dr.Sharma,1500
+101,Siya,35,Female,Diabetes,Dr.Gupta,5000
+102,Kabir,18,Male,Asthma,Dr.Singh,2500
+103,Ananya,42,Female,BP,Dr.Sharma,4500
+104,Tina,23,Female,Fever,Dr.Sharma,1800
+105,Rahul,28,Male,Diabetes,Dr.Gupta,3500
+106,Arjun,45,Male,Typhoid,Dr.Singh,2100
+107,Naina,33,Female,Asthma,Dr.Verma,3000
+108,Aisha,30,Female,Heart Diseases,Dr.Verma,12000
+109,Vivaan,15,Male,Allergy,Dr.Sharma,2300

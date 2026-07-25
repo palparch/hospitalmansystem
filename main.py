@@ -2,6 +2,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import csv
 
+csvpath = "patient.csv"
+
 #print menu
 print("="*10, "NOVACARE HOSPITAL MANAGEMENT SYSTEM", "="*10)
 print("~ please select an option ~")
@@ -17,12 +19,12 @@ print("="*57)
 choice = int(input("Enter your choice: "))
 
 def display_records():
-	df = pd.read_csv("patient.csv")
+	df = pd.read_csv(csvpath)
 	print("\nPatient Records")
 	print(df)
 
 def add_patient():
-	df = pd.read_csv("patient.csv")
+	df = pd.read_csv(csvpath)
 
 	try:
 		pid = int(input("Patient ID: "))
@@ -38,14 +40,27 @@ def add_patient():
 	new_patient = {"Patient_ID": pid, "Name": name, "Age": age, "Gender": gender, "Diseases": diseases, "Doctor": doctor, "Bill": bill}
 
 	df.loc[len(df)] = new_patient
-	df.to_csv("patient.csv", index=False)
+	df.to_csv(csvpath, index=False)
 	print("\nPatient Successfully Added")
 
-#def search_patient():					#ye tu karegi tulip
-#def delete_patient():					#ye tu karegi tulip
+#def search_patient():
+def delete_patient():
+	df = pd.read_csv(csvpath)
+	pid = int(input("Enter the patient ID for the patient that you want to delete: "))
+	print("Are you sure you want to delete patient", pid, "?")
+	response = input("Enter yes or no to continue: ")
+
+	if response == "no":
+		return True
+	
+	newdf = df.drop(pid-100, axis=0)
+	print("Successfully deleted patient", pid)
+	newdf.to_csv(csvpath, index=False)
+	
+	
 #def calc_bill():						#ye tu karegi tulip
 def display_graph():
-	df = pd.read_csv("patient.csv")
+	df = pd.read_csv(csvpath)
 	diseases_count = df["Diseases"].value_counts()
 	
 	plt.figure(figsize=(8,5))
