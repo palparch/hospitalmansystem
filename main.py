@@ -2,6 +2,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import csv
 
+csvpath = "patient.csv"
+
 #print menu
 print("="*10, "NOVACARE HOSPITAL MANAGEMENT SYSTEM", "="*10)
 print("~ please select an option ~")
@@ -12,17 +14,18 @@ print("4. Delete Patient Record ")
 print("5. Calculate Bill ")
 print("6. Display Graph ")
 print("7. Exit Program ")
+print("8. Register/update your hospital details ")
 print("="*57)
 
 choice = int(input("Enter your choice: "))
 
 def display_records():
-	df = pd.read_csv("patient.csv")
+	df = pd.read_csv(csvpath)
 	print("\nPatient Records")
 	print(df)
 
 def add_patient():
-	df = pd.read_csv("patient.csv")
+	df = pd.read_csv(csvpath)
 
 	try:
 		pid = int(input("Patient ID: "))
@@ -38,12 +41,12 @@ def add_patient():
 	new_patient = {"Patient_ID": pid, "Name": name, "Age": age, "Gender": gender, "Diseases": diseases, "Doctor": doctor, "Bill": bill}
 
 	df.loc[len(df)] = new_patient
-	df.to_csv("patient.csv", index=False)
+	df.to_csv(csvpath, index=False)
 	print("\nPatient Successfully Added")
 
-#def search_patient(pid):
-#	df = pd.read_csv(csvpath)
-#	print(df.loc[pid])
+def search_patient(pid):
+	df = pd.read_csv(csvpath)
+	print(df.loc[int(pid-100)].to_string())
 
 def delete_patient():
 	df = pd.read_csv(csvpath)
@@ -59,10 +62,13 @@ def delete_patient():
 	newdf.to_csv(csvpath, index=False)
 	
 	
-#def search_patient():					#ye tu karegi tulip
-#def calc_bill():						#ye tu karegi tulip
+#def calc_bill():
+# here, lets do bill = consultation fee + room charge (if serious disease) + medicine charge.
+# medicine charge will be asked by the user, while consulation and room charge will be automatic.
+
+
 def display_graph():
-	df = pd.read_csv("patient.csv")
+	df = pd.read_csv(csvpath)
 	diseases_count = df["Diseases"].value_counts()
 	
 	plt.figure(figsize=(8,5))
@@ -96,8 +102,8 @@ elif choice == 2:
 	add_patient()
 elif choice == 3:
 	# later, also add the ability to search by name
-	#pid = int(input("Enter the patient ID to search: "))
-	#search_patient(pid)
+	pid = int(input("Enter the patient ID to search: "))
+	search_patient(pid)
 elif choice == 4:
 	delete_patient()
 elif choice == 5:
@@ -106,5 +112,7 @@ elif choice == 6:
 	display_graph()
 elif choice == 7:
 	exit_program()
+elif choice == 8:
+	print("work in progress, will prolly be done by morning, i hope.")
 else:
 	print("Please enter a valid choice.")
