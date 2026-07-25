@@ -72,6 +72,23 @@ def delete_patient():
 	print("Successfully deleted patient", pid)
 	newdf.to_csv(csvpath, index=False)
 
+def register_hospital():
+	print("Please enter the details as they are asked.")
+	name = input("Enter the name of the hospital: ")
+	addr = input("Enter the address of the hospital: ")
+	contact_num = input("Enter the contact number of the hospital: ")
+	room_charge = int(input("Enter the room charge for a single day: "))
+	
+	hospital_details = {
+			"Name": name, 
+			"Address": addr,
+			"Contact_Number": contact_num,
+			"Room_Charge": room_charge
+			}
+
+	df = pd.DataFrame([hospital_details])
+	df.to_csv(csvpathhospital, index=False)
+
 
 def register_doctor():
 	df = pd.read_csv(csvpathdoc)
@@ -148,9 +165,15 @@ elif choice == 6:
 elif choice == 7:
 	exit_program()
 elif choice == 8:
-	print("work in progress, will prolly be done by morning, i hope.")
+	# register part is done
+	# need to add the part where it checks if the csv is empty or not
+	# if empty, it writes new data
+	# if not empty, it prompts to update only one value (or maybe more)
+	register_hospital()
 elif choice == 9:
 	# register part is done, i just need to make update part
+	# give straight up choice to the user, to either add a new entry or update old ones
+	# also, if the csv is empty, dont let them update 
 	register_doctor()
 else:
 	print("Please enter a valid choice.")
