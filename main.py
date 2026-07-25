@@ -1,8 +1,13 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import csv
+from datetime import datetime
+
+# add the functionality to handle the error if the csv doesnt exist
 
 csvpath = "patient.csv"
+csvpathdoc = "doctors.csv"
+csvpathhospital = "hospital.csv"
 
 #print menu
 print("="*10, "NOVACARE HOSPITAL MANAGEMENT SYSTEM", "="*10)
@@ -14,7 +19,8 @@ print("4. Delete Patient Record ")
 print("5. Calculate Bill ")
 print("6. Display Graph ")
 print("7. Exit Program ")
-print("8. Register/update your hospital details ")
+print("8. Register/update Your Hospital Details ")
+print("9. Register/update a Doctor")
 print("="*57)
 
 choice = int(input("Enter your choice: "))
@@ -28,15 +34,20 @@ def add_patient():
 	df = pd.read_csv(csvpath)
 
 	try:
-		pid = int(input("Patient ID: "))
+		pid = int(input("Patient ID: ")) # auto generate it, dont trust the user
 	except:
 		print("Please enter a valid value. PID can only be an integer value.")
 	name = input("Name: ")
 	age = int(input("Age: "))
 	gender = input("Gender: ")
-	diseases = input("Diseases: ")
-	doctor = input("Doctor: ")
-	bill = int(input("Bill: "))
+	diseases = input("Diseases: ") # maybe list diseases first 
+	doctor = input("Doctor: ") # list the number of docs first, depending on the disease(s)
+	bill = int(input("Bill: ")) # leave it, delete it because we'll calc the bill
+	date_of_reg = input("Enter the date of registration (DD-MM-YYY) (or leave empty for today's date): ")
+	# add the functionality to save the date in csv, for ease of room charge calculation
+
+	if not date_of_reg:
+		date_of_reg = datetime.now().strftime("%d-%m-%Y")
 
 	new_patient = {"Patient_ID": pid, "Name": name, "Age": age, "Gender": gender, "Diseases": diseases, "Doctor": doctor, "Bill": bill}
 
@@ -60,11 +71,35 @@ def delete_patient():
 	newdf = df.drop(pid-100, axis=0)
 	print("Successfully deleted patient", pid)
 	newdf.to_csv(csvpath, index=False)
-	
+
+
+def register_doctor():
+	df = pd.read_csv(csvpathdoc)
+
+	print("Please enter the details as they are asked.")
+	doc_id = int(len(df)+1)
+	name = input("Enter the name: ")
+	specialisation = input("Enter the specialisation: ")
+	contact_num = int(input("Enter the contact number: "))
+	consult_fee = int(input("Enter the consultation fee taken by this doctor: "))
+
+	new_doctor = {
+			"Doctor_ID": doc_id,
+			"Name": name,
+			"Specialisation": specialisation,
+			"Contact_Number": contact_num,
+			"Consultation_Fee": consult_fee
+			}
+	df.loc[len(df)] = new_doctor
+	df.to_csv(csvpathdoc, index=False)
+
+
 	
 #def calc_bill():
 # here, lets do bill = consultation fee + room charge (if serious disease) + medicine charge.
 # medicine charge will be asked by the user, while consulation and room charge will be automatic.
+# consultation fee will be taken from doctors.csv
+# while room charge, keep it fixed for a hospital, so we'll take it from hospital.csv
 
 
 def display_graph():
@@ -114,5 +149,8 @@ elif choice == 7:
 	exit_program()
 elif choice == 8:
 	print("work in progress, will prolly be done by morning, i hope.")
+elif choice == 9:
+	# register part is done, i just need to make update part
+	register_doctor()
 else:
 	print("Please enter a valid choice.")
