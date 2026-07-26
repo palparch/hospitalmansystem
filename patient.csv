@@ -10,3 +10,4 @@ Patient_ID,Name,Age,Gender,Diseases,Doctor,Doctor_ID,Registered_Date,Room_Requir
 109,Aisha,30,Female,Heart Diseases,Dr.Verma,1,18-03-2026,True
 110,Vivaan,15,Male,Allergy,Dr.Sharma,0,05-06-2026,False
 111,Isha,23,Female,Allergy,Dr.Gupta,2,27-02-2026,True
+112,palpy,35,male,test,Dr.Verma,1,26-07-2026,False

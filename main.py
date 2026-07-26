@@ -9,18 +9,18 @@ csvpath = "patient.csv"
 csvpathdoc = "doctors.csv"
 csvpathhospital = "hospital.csv"
 
-#print menu
+# print menu
 print("="*10, "NOVACARE HOSPITAL MANAGEMENT SYSTEM", "="*10)
 print("~ please select an option ~")
 print("1. Display All Records ")
-print("2. Add a New Patient Record ")
+print("2. Add/Update a Patient Record ")
 print("3. Search Patient with ID")
 print("4. Delete Patient Record ")
 print("5. Calculate Bill ")
 print("6. Display Graph ")
 print("7. Exit Program ")
-print("8. Register/update Your Hospital Details ")
-print("9. Register/update a Doctor")
+print("8. Register/Update Your Hospital Details ")
+print("9. Register/Update a Doctor Record ")
 print("="*57)
 
 choice = int(input("Enter your choice: "))
@@ -33,10 +33,7 @@ def display_records():
 def add_patient():
 	df = pd.read_csv(csvpath)
 
-	try:
-		pid = int(input("Patient ID: ")) # auto generate it, dont trust the user
-	except:
-		print("Please enter a valid value. PID can only be an integer value.")
+	pid = int(len(df)+101)
 	name = input("Name: ")
 	age = int(input("Age: "))
 	gender = input("Gender: ")
@@ -47,7 +44,6 @@ def add_patient():
 	# and add it to the csv, for ease of calculating bill
 	# for now, im asking the user
 	doc_ID = int(input("Enter the doctor's ID: "))
-	bill = int(input("Bill: ")) # leave it, delete it because we'll calc the bill
 	date_of_reg = input("Enter the date of registration (DD-MM-YYY) (or leave empty for today's date): ")
 	print("Does the patient require a stay at the hospital? ")
 	room_req = input("Leave blank if not needed, or type in something")
@@ -67,6 +63,7 @@ def add_patient():
 			"Diseases": diseases, 
 			"Doctor": doctor, 
 			"Doctor_ID": doc_ID,
+			"Registered_Date": date_of_reg,
 			"Room_Required": room_req
 			}
 
@@ -78,6 +75,7 @@ def search_patient(pid):
 	df = pd.read_csv(csvpath)
 	patient = df.loc[int(pid-101)]
 	return patient
+
 
 def delete_patient():
 	df = pd.read_csv(csvpath)
@@ -109,6 +107,29 @@ def register_hospital():
 	df = pd.DataFrame([hospital_details])
 	df.to_csv(csvpathhospital, index=False)
 
+def update_hospital(hospdf):
+	print("What do you want to update?")
+	print("Enter the corresponding number to continue.")
+	print("1. Name")
+	print("2. Address")
+	print("3. Contact Number")
+	print("4. Room Charge Per Day")
+
+	choice = int(input("Enter your choice number: "))
+
+	if choice == 1:
+		hospdf['Name'] = input("Enter new name: ")
+	elif choice == 2:
+		hospdf['Address'] = input("Enter new address: ")
+	elif choice == 3:
+		hospdf['Contact_Number'] = int(input("Enter new contact number: "))
+	elif choice == 4:
+		hospdf['Room_Charge'] = int(input("Enter new room charge: "))
+	else:
+		print("Please enter a valid choice.")
+
+	hospdf.to_csv(csvpathhospital, index=False)
+	
 
 def register_doctor():
 	df = pd.read_csv(csvpathdoc)
@@ -130,6 +151,69 @@ def register_doctor():
 	df.loc[len(df)] = new_doctor
 	df.to_csv(csvpathdoc, index=False)
 
+
+def update_patient():
+
+
+	print("WORK IN PROGRESS!!! CONTINUE AHEAD WITH CAUTION!!!")
+    df = pd.read_csv(csvpath)
+
+    pid = int(input("Enter the Patient ID to Update: "))
+
+    print("What do you want to update?")
+    print("Enter the corresponding number to continue.")
+    print("1. Name")
+    print("2. Age")
+    print("3. Gender")
+    print("4. Diseases")
+	print("5. Doctor")
+	print("6. Registered Date")
+	print("7. Whether a Room is Required or Not")
+
+    choice = int(input("Enter your choice number: "))
+
+    #if choice == 1:
+    #    docdf.loc[doc_ID, 'Name'] = input("Enter new name: ")
+    #elif choice == 2:
+    #    docdf.loc[doc_ID, 'Specialisation'] = input("Enter new value: ")
+    #elif choice == 3:
+    #    print(docdf.loc[doc_ID, 'Contact_Number'])
+    #    docdf.loc[doc_ID, 'Contact_Number'] = int(input("Enter new contact number: "))
+    #elif choice == 4:
+    #    docdf.loc[doc_ID, 'Consultation_Fee'] = int(input("Enter new consultation fee: "))
+    #else:
+    #    print("Please enter a valid choice.")
+
+    #docdf.to_csv(csvpathdoc, index=False)
+
+
+def update_doctor():
+	docdf = pd.read_csv(csvpathdoc)
+
+	doc_ID = int(input("Enter the Doctor ID to update: "))
+
+	print("What do you want to update?")
+	print("Enter the corresponding number to continue.")
+	print("1. Name")
+	print("2. Specialisation")
+	print("3. Contact Number")
+	print("4. Consultation Fee")
+
+	choice = int(input("Enter your choice number: "))
+
+	if choice == 1:
+		docdf.loc[doc_ID, 'Name'] = input("Enter new name: ")
+	elif choice == 2:
+		docdf.loc[doc_ID, 'Specialisation'] = input("Enter new value: ")
+	elif choice == 3:
+		print(docdf.loc[doc_ID, 'Contact_Number'])
+		docdf.loc[doc_ID, 'Contact_Number'] = int(input("Enter new contact number: "))
+	elif choice == 4:
+		docdf.loc[doc_ID, 'Consultation_Fee'] = int(input("Enter new consultation fee: "))
+	else:
+		print("Please enter a valid choice.")
+
+	docdf.to_csv(csvpathdoc, index=False)
 
 	
 def calc_bill():
@@ -160,10 +244,6 @@ def calc_bill():
 	print("so total room charge is", total_room_charge)
 	print("medicine cost is", medicine_cost)
 	print("so we have the total as ", total_bill)
-# here, lets do bill = consultation fee + room charge (if serious disease) + medicine charge.
-# medicine charge will be asked by the user, while consulation and room charge will be automatic.
-# consultation fee will be taken from doctors.csv
-# while room charge, keep it fixed for a hospital, so we'll take it from hospital.csv
 
 
 def display_graph():
@@ -199,6 +279,19 @@ if choice == 1:
 	display_records()
 elif choice == 2:
 	add_patient()
+
+	print("Please enter a choice as prompted below.")
+    print("1. Register a new patient.")
+    print("2. Update a patient's details.")
+
+    response = int(input("Enter your choice: "))
+
+    if response == 1:
+        add_patient()
+    elif response == 2:
+        update_patient()
+    else:
+        print("Please enter a valid choice.")
 elif choice == 3:
 	# later, also add the ability to search by name
 	pid = int(input("Enter the patient ID to search: "))
@@ -212,15 +305,29 @@ elif choice == 6:
 elif choice == 7:
 	exit_program()
 elif choice == 8:
-	# register part is done
-	# need to add the part where it checks if the csv is empty or not
-	# if empty, it writes new data
-	# if not empty, it prompts to update only one value (or maybe more)
-	register_hospital()
+	hospdf = pd.read_csv(csvpathhospital)
+	if hospdf.empty:
+		register_hospital()
+	else:
+		print("The hospital is already registered.")
+		print("You can update the details here.")
+		update_hospital(hospdf)
 elif choice == 9:
-	# register part is done, i just need to make update part
-	# give straight up choice to the user, to either add a new entry or update old ones
-	# also, if the csv is empty, dont let them update 
-	register_doctor()
+	print("Please enter a choice as prompted below.")
+	print("1. Register a new doctor.")
+	print("2. Update a doctor's details.")
+
+	response = int(input("Enter your choice: "))
+
+	if response == 1:
+		register_doctor()
+	elif response == 2:
+		update_doctor()
+	else:
+		print("Please enter a valid choice.")
 else:
 	print("Please enter a valid choice.")
+
+
+
+	# for the update functions, add error management for when the given id doesnt exist in the csv
