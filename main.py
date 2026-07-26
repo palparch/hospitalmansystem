@@ -246,6 +246,27 @@ def calc_bill():
 	print("so we have the total as ", total_bill)
 
 
+
+# things left to do (things that palparch has to do):
+# 1.  def discharge_patient():
+# uses existing fucntions to first print the bill, mark the patient as discharged on the csv file
+# 2. also,
+# i'll add data validation to all the inputs
+# 3. the update patient function is work in progress but yeah it'll be done too
+# 4. in the patient.csv file, let's add another field for status of the patient, whether admitted, discharged because hospitals are rquired to keep data as old as 3 years, atleast in india, and that is mandatory by law.
+# 5. another thing left to do is,
+# 	using the actual registered hospital name everywhere
+# 6. yet another thing left,
+# 	printing the bill in an organised manner, rn it just prints very messy
+# 7. for update functions, check if the given id exists and then only proceed. same with the delete ones
+# 8. make a function to delete a doctor record
+# 9. when registering a patient, do it so that the doctor id is taken care of by itself, idk how but ill try.
+# 10. and yeah last but not the least
+# 	ill add error management for the cases where the csv has yet to be initialised, which means the csv is empty.
+# all that i did so far, took me like 4 hours lmao so yeah im gonna take a rest for a while and come back again to attack this shii
+# also alsoooo, if you have any recommendations, like any at all, feel free to add here! byeee!
+
+
 def display_graph():
 	df = pd.read_csv(csvpath)
 	diseases_count = df["Diseases"].value_counts()
