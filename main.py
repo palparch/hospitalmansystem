@@ -79,7 +79,17 @@ def add_patient():
 def search_patient(pid):
 	df = pd.read_csv(csvpath)
 	patient = df.loc[int(pid-101)]
-	return patient
+
+	 try:
+        patient = df[df["Patient_ID"] == pid].to_string(index=False)
+
+		if patient.empty:
+			print("No patient exists with this patient ID. Please try again.")
+			return False
+		return patient
+
+    except:
+        print("Patient ID does not exist")
 
 
 def delete_patient():
