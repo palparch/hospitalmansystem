@@ -3,14 +3,15 @@ import matplotlib.pyplot as plt
 import csv
 from datetime import datetime
 
-# add the functionality to handle the error if the csv doesnt exist
-
 csvpath = "patient.csv"
 csvpathdoc = "doctors.csv"
 csvpathhospital = "hospital.csv"
+csvpathdisease = "diseases.csv"
+
+hospdf = pd.read_csv(csvpathhospital)
 
 # print menu
-print("="*10, "NOVACARE HOSPITAL MANAGEMENT SYSTEM", "="*10)
+print("="*10, (hospdf['Name'][0]).upper(), "MANAGEMENT SYSTEM", "="*10)
 print("~ please select an option ~")
 print("1. Display All Records ")
 print("2. Add/Update a Patient Record ")
@@ -32,18 +33,17 @@ def display_records():
 
 def add_patient():
 	df = pd.read_csv(csvpath)
+	diseasesdf = pd.read_csv(csvpathdisease)
+	docdf = pd.read_csv(csvpathdoc)
 
 	pid = int(len(df)+101)
 	name = input("Name: ")
 	age = int(input("Age: "))
 	gender = input("Gender: ")
-	diseases = input("Diseases: ") # maybe list diseases first 
-	doctor = input("Doctor: ") # list the number of docs first, depending on the disease(s)
-	# search doctor by name, get their ID, then:
-	# doc_ID = 
-	# and add it to the csv, for ease of calculating bill
-	# for now, im asking the user
-	doc_ID = int(input("Enter the doctor's ID: "))
+	disease = input("Diseases (enter the name only): ")
+	for i in range(len(diseasesdf)):
+		if diseasesdf.loc[i, "Disease"].lower() == disease.lower():
+			doc_ID = "Doctor ID:", diseasesdf.loc[i, "Doctor_ID"]
 	date_of_reg = input("Enter the date of registration (DD-MM-YYY) (or leave empty for today's date): ")
 	print("Does the patient require a stay at the hospital? ")
 	room_req = input("Leave blank if not needed, or type in something")
@@ -61,10 +61,10 @@ def add_patient():
 			"Age": age, 
 			"Gender": gender, 
 			"Diseases": diseases, 
-			"Doctor": doctor, 
 			"Doctor_ID": doc_ID,
 			"Registered_Date": date_of_reg,
-			"Room_Required": room_req
+			"Room_Required": room_req,
+			"Status": admitted
 			}
 
 	df.loc[len(df)] = new_patient
@@ -153,38 +153,48 @@ def register_doctor():
 
 
 def update_patient():
+	df = pd.read_csv(csvpath)
+	pid = int(input("Enter the Patient ID to Update: "))
+	row = df[df["Patient_ID"] == pid].index[0]
 
-
-	print("WORK IN PROGRESS!!! CONTINUE AHEAD WITH CAUTION!!!")
-    df = pd.read_csv(csvpath)
-
-    pid = int(input("Enter the Patient ID to Update: "))
-
-    print("What do you want to update?")
-    print("Enter the corresponding number to continue.")
-    print("1. Name")
-    print("2. Age")
-    print("3. Gender")
-    print("4. Diseases")
-	print("5. Doctor")
+	print("What do you want to update?")
+	print("Enter the corresponding number to continue.")
+	print("1. Name")
+	print("2. Age")
+	print("3. Gender")
+	print("4. Diseases")
+	print("5. Doctor ID")
 	print("6. Registered Date")
 	print("7. Whether a Room is Required or Not")
 
-    choice = int(input("Enter your choice number: "))
+	choice = int(input("Enter your choice number: "))
 
-    #if choice == 1:
-    #    docdf.loc[doc_ID, 'Name'] = input("Enter new name: ")
-    #elif choice == 2:
-    #    docdf.loc[doc_ID, 'Specialisation'] = input("Enter new value: ")
-    #elif choice == 3:
-    #    print(docdf.loc[doc_ID, 'Contact_Number'])
-    #    docdf.loc[doc_ID, 'Contact_Number'] = int(input("Enter new contact number: "))
-    #elif choice == 4:
-    #    docdf.loc[doc_ID, 'Consultation_Fee'] = int(input("Enter new consultation fee: "))
-    #else:
-    #    print("Please enter a valid choice.")
+	if choice == 1:
+		df.loc[row, "Name"] = input("Enter new name: ")
 
-    #docdf.to_csv(csvpathdoc, index=False)
+	elif choice == 2:
+		df.loc[row, "Age"] = int(input("Enter new age: "))
+
+	elif choice == 3:
+		df.loc[row, "Gender"] = input("Enter new gender: ")
+
+	elif choice == 4:
+		df.loc[row, "Diseases"] = input("Enter new disease: ")
+
+	elif choice == 5:
+		df.loc[row, "Doctor_ID"] = int(input("Enter new Doctor ID: "))
+
+	elif choice == 6:
+		print("Please enter a new date in (DD-MM-YYYY) format.")
+		df.loc[row, "Registered_Date"] = input("Enter new date: ")
+
+	elif choice == 7:
+		df.loc[row, "Room_Required"] = input("Enter True or False: ")
+
+	else:
+		print("Please enter a valid choice.")
+
+	df.to_csv(csvpath, index=False)
 
 
 def update_doctor():
@@ -193,7 +203,6 @@ def update_doctor():
 	doc_ID = int(input("Enter the Doctor ID to update: "))
 
 	print("What do you want to update?")
-	print("Enter the corresponding number to continue.")
 	print("1. Name")
 	print("2. Specialisation")
 	print("3. Contact Number")
@@ -201,21 +210,39 @@ def update_doctor():
 
 	choice = int(input("Enter your choice number: "))
 
+	row = docdf[docdf["Doctor_ID"] == doc_ID].index[0]
+
 	if choice == 1:
-		docdf.loc[doc_ID, 'Name'] = input("Enter new name: ")
+		docdf.loc[row, "Name"] = input("Enter new name: ")
+
 	elif choice == 2:
-		docdf.loc[doc_ID, 'Specialisation'] = input("Enter new value: ")
+		docdf.loc[row, "Specialisation"] = input("Enter new value: ")
+
 	elif choice == 3:
-		print(docdf.loc[doc_ID, 'Contact_Number'])
-		docdf.loc[doc_ID, 'Contact_Number'] = int(input("Enter new contact number: "))
+		docdf.loc[row, "Contact_Number"] = int(input("Enter new contact number: "))
+
 	elif choice == 4:
-		docdf.loc[doc_ID, 'Consultation_Fee'] = int(input("Enter new consultation fee: "))
+		docdf.loc[row, "Consultation_Fee"] = int(input("Enter new consultation fee: "))
+
 	else:
 		print("Please enter a valid choice.")
 
 	docdf.to_csv(csvpathdoc, index=False)
 
-	
+
+def delete_doctor():
+	df = pd.read_csv(csvpathdoc)
+	doc_ID = int(input("Enter the doctor ID for the patient that you want to delete: "))
+	print("Are you sure you want to delete doctor", pid, "?")
+	response = input("Enter yes or no to continue: ")
+
+	if response == "no":
+		return True
+
+	newdf = df.drop(doc_ID, axis=0)
+	print("Successfully deleted patient", doc_ID)
+	newdf.to_csv(csvpathdoc, index=False)	
+
 def calc_bill():
 	docdf = pd.read_csv(csvpathdoc)
 	pdf = pd.read_csv(csvpath)
@@ -252,17 +279,9 @@ def calc_bill():
 # uses existing fucntions to first print the bill, mark the patient as discharged on the csv file
 # 2. also,
 # i'll add data validation to all the inputs
-# 3. the update patient function is work in progress but yeah it'll be done too
-# 4. in the patient.csv file, let's add another field for status of the patient, whether admitted, discharged because hospitals are rquired to keep data as old as 3 years, atleast in india, and that is mandatory by law.
-# 5. another thing left to do is,
-# 	using the actual registered hospital name everywhere
 # 6. yet another thing left,
-# 	printing the bill in an organised manner, rn it just prints very messy
+#	printing the bill in an organised manner, rn it just prints very messy
 # 7. for update functions, check if the given id exists and then only proceed. same with the delete ones
-# 8. make a function to delete a doctor record
-# 9. when registering a patient, do it so that the doctor id is taken care of by itself, idk how but ill try.
-# 10. and yeah last but not the least
-# 	ill add error management for the cases where the csv has yet to be initialised, which means the csv is empty.
 # all that i did so far, took me like 4 hours lmao so yeah im gonna take a rest for a while and come back again to attack this shii
 # also alsoooo, if you have any recommendations, like any at all, feel free to add here! byeee!
 
@@ -293,28 +312,25 @@ def display_graph():
 
 
 def exit_program():
-	print("Thanks for using NovaCare Hospital System, Have a Nice Day ")
+	print("Thanks for using", hospdf['Name'][0], "Hospital System, Have a Nice Day ")
 
 
 if choice == 1:
 	display_records()
 elif choice == 2:
-	add_patient()
-
 	print("Please enter a choice as prompted below.")
-    print("1. Register a new patient.")
-    print("2. Update a patient's details.")
+	print("1. Register a new patient.")
+	print("2. Update a patient's details.")
 
-    response = int(input("Enter your choice: "))
+	response = int(input("Enter your choice: "))
 
-    if response == 1:
-        add_patient()
-    elif response == 2:
-        update_patient()
-    else:
-        print("Please enter a valid choice.")
+	if response == 1:
+		add_patient()
+	elif response == 2:
+		update_patient()
+	else:
+		print("Please enter a valid choice.")
 elif choice == 3:
-	# later, also add the ability to search by name
 	pid = int(input("Enter the patient ID to search: "))
 	print(search_patient(pid))
 elif choice == 4:

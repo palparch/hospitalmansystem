@@ -1,5 +1,15 @@
 Doctor_ID,Name,Specialisation,Contact_Number,Consultation_Fee
 0,Dr.Sharma,Cardiologist,3399442266,1000
-1,Dr.Verma,Opthalmologist,8833776644,500
+1,Dr.Verma,Ophthalmologist,8833776644,100
 2,Dr.Gupta,Physician,2244664455,400
-3,Dr.Singh,Physician,1144336677,500
+3,Dr.Singh,Infectious Disease Specialist,1144336677,500
+4,Dr.Mehta,Endocrinologist,9988776655,900
+5,Dr.Kapoor,Pulmonologist,9876543210,800
+6,Dr.Iyer,Allergist & Immunologist,9765432109,700
+7,Dr.Patel,Neurologist,9654321098,1200
+8,Dr.Agarwal,Gastroenterologist,9543210987,900
+9,Dr.Reddy,General Surgeon,9432109876,1500
+10,Dr.Khan,Urologist,9321098765,1000
+11,Dr.Chauhan,Orthopedic Surgeon,9210987654,900
+12,Dr.Nair,Dermatologist,9109876543,700
+13,Dr.Joshi,Psychiatrist,9098765432,850

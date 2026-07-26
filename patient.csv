@@ -1,13 +1,13 @@
-Patient_ID,Name,Age,Gender,Diseases,Doctor,Doctor_ID,Registered_Date,Room_Required
-101,Aarav,24,Male,Fever,Dr.Sharma,0,12-03-2026,False
-102,Siya,35,Female,Diabetes,Dr.Gupta,2,25-01-2026,True
-103,Kabir,18,Male,Asthma,Dr.Singh,3,08-05-2026,False
-104,Ananya,42,Female,BP,Dr.Sharma,0,17-02-2026,True
-105,Tina,23,Female,Fever,Dr.Sharma,0,30-06-2026,False
-106,Rahul,28,Male,Diabetes,Dr.Gupta,2,14-04-2026,True
-107,Arjun,45,Male,Typhoid,Dr.Singh,3,21-01-2026,False
-108,Naina,33,Female,Asthma,Dr.Verma,1,09-07-2026,True
-109,Aisha,30,Female,Heart Diseases,Dr.Verma,1,18-03-2026,True
-110,Vivaan,15,Male,Allergy,Dr.Sharma,0,05-06-2026,False
-111,Isha,23,Female,Allergy,Dr.Gupta,2,27-02-2026,True
-112,palpy,35,male,test,Dr.Verma,1,26-07-2026,False
+Patient_ID,Name,Age,Gender,Diseases,Doctor_ID,Registered_Date,Room_Required
+101,Aarav,24,Male,Fever,0,12-03-2026,False
+102,Siya,35,Female,Diabetes,2,25-01-2026,True
+103,Kabir,18,Male,Asthma,3,08-05-2026,False
+104,Ananya,42,Female,BP,0,17-02-2026,True
+105,Tina,23,Female,Fever,0,30-06-2026,False
+106,Rahul,28,Male,Diabetes,2,14-04-2026,True
+107,Arjun,45,Male,Typhoid,3,21-01-2026,False
+108,Naina,33,Female,Asthma,1,09-07-2026,True
+109,Aisha,30,Female,Heart Diseases,1,18-03-2026,True
+110,Vivaan,15,Male,Allergy,0,05-06-2026,False
+111,Isha,23,Female,Allergy,2,27-02-2026,True
+112,palpy,35,male,test,1,26-07-2026,False

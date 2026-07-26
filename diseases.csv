@@ -1,0 +1,32 @@
+Disease,Category,Doctor_ID
+Fever,General Medicine,2
+Diabetes,Endocrinology,4
+Asthma,Pulmonology,5
+BP,Cardiology,0
+Heart Diseases,Cardiology,0
+Typhoid,Infectious Disease,3
+Allergy,Allergy & Immunology,6
+Migraine,Neurology,7
+Pneumonia,Pulmonology,5
+Dengue,Infectious Disease,3
+Malaria,Infectious Disease,3
+Tuberculosis,Pulmonology,5
+COVID-19,General Medicine,2
+Flu,General Medicine,2
+Food Poisoning,Gastroenterology,8
+Gastritis,Gastroenterology,8
+Appendicitis,General Surgery,9
+Kidney Stones,Urology,10
+UTI,Urology,10
+Arthritis,Orthopedics,11
+Fracture,Orthopedics,11
+Back Pain,Orthopedics,11
+Skin Infection,Dermatology,12
+Eczema,Dermatology,12
+Psoriasis,Dermatology,12
+Eye Infection,Ophthalmology,1
+Cataract,Ophthalmology,1
+Depression,Psychiatry,13
+Anxiety,Psychiatry,13
+Thyroid Disorder,Endocrinology,4
+test,General Medicine,2
