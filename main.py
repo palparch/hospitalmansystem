@@ -46,7 +46,7 @@ def add_patient():
 	except:
 		print("Age can only be integers. Please try again with the correct value.")
 	gender = input("Gender: ")
-	print(csvpathdisease)
+	print(diseasesdf)
 	doc_ID = None
 
 	disease = input("Diseases (enter the name only): ")
