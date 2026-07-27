@@ -1,6 +1,5 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-import csv
 
 #print menu
 print("="*10, "NOVACARE HOSPITAL MANAGEMENT SYSTEM", "="*10)
@@ -10,7 +9,7 @@ print("2. Add a New Patient Record ")
 print("3. Search Patient with ID")
 print("4. Delete Patient Record ")
 print("5. Calculate Bill ")
-print("6. Display Graph ")
+print("6. Display Graphs ")
 print("7. Exit Program ")
 print("="*57)
 
@@ -19,15 +18,14 @@ choice = int(input("Enter your choice: "))
 def display_records():
 	df = pd.read_csv("patient.csv")
 	print("\nPatient Records")
+	print("\n" + "-"*70)
 	print(df)
+	print("-"*70)
 
 def add_patient():
 	df = pd.read_csv("patient.csv")
 
-	try:
-		pid = int(input("Patient ID: "))
-	except:
-		print("Please enter a valid value. PID can only be an integer value.")
+	pid = int(input("Patient ID: "))
 	name = input("Name: ")
 	age = int(input("Age: "))
 	gender = input("Gender: ")
@@ -39,11 +37,45 @@ def add_patient():
 
 	df.loc[len(df)] = new_patient
 	df.to_csv("patient.csv", index=False)
-	print("\nPatient Successfully Added")
+	print("\nPatient Successfully Added.")
 
-#def search_patient():					#ye tu karegi tulip
-#def delete_patient():					#ye tu karegi tulip
-#def calc_bill():						#ye tu karegi tulip
+def search_patient():
+	df = pd.read_csv("patient.csv")
+	pid = int(input("Enter the patient ID to search: "))
+
+	patient = df.loc[int(pid-101)]
+
+	print()
+	print("Found Patient Successfully.")
+	print("-"*25)
+	print(patient)
+	print("-"*25)
+
+
+def delete_patient():
+	df = pd.read_csv("patient.csv")
+	
+	print()
+	pid = int(input("Enter the Patient ID for the Patient That You Want to Delete: "))
+	print("Are You Sure You Want to Delete Patient", pid, "?")
+	response = input("Enter Yes or No to Continue: ")
+
+	if response == "no":
+		return True
+
+	
+	newdf = df.drop(pid-101, axis=0)
+	newdf.to_csv("patient.csv", index=False)
+	print("Successfully Deleted the Patient", pid)
+
+
+def calc_bill():
+	df = pd.read_csv("patient.csv")
+	pid = int(input("Enter the Patient ID: "))
+
+	print("The Bill to Pay for This Patient Is:", df['Bill'][pid-101], "/-")
+
+
 def display_graph():
 	df = pd.read_csv("patient.csv")
 	diseases_count = df["Diseases"].value_counts()
@@ -51,7 +83,7 @@ def display_graph():
 	plt.figure(figsize=(8,5))
 	plt.bar(diseases_count.index, diseases_count.values)
 	
-	plt.title("Number of Patient for Each Diseases")
+	plt.title("Number of Patient for Each Disease")
 	plt.xlabel("Diseases")
 	plt.ylabel("Number of patients")
 
@@ -88,4 +120,4 @@ elif choice == 6:
 elif choice == 7:
 	exit_program()
 else:
-	print("Please enter a valid choice.")
+	print("Please Enter a Valid Choice.")
