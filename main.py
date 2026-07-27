@@ -46,8 +46,9 @@ def add_patient():
 	except:
 		print("Age can only be integers. Please try again with the correct value.")
 	gender = input("Gender: ")
-	
+	print(csvpathdisease)
 	doc_ID = None
+
 	disease = input("Diseases (enter the name only): ")
 	for i in range(len(diseasesdf)):
 		if diseasesdf.loc[i, "Disease"].lower() == disease.lower():
