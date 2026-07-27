@@ -69,7 +69,7 @@ def add_patient():
 		date_of_reg = datetime.now().strftime("%d-%m-%Y")
 
 	try:
-    	datetime.strptime(date_of_reg, "%d-%m-%Y")
+	datetime.strptime(date_of_reg, "%d-%m-%Y")
 	except ValueError:
     	print("Invalid date format.")
     	return False
