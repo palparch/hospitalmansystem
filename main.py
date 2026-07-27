@@ -45,7 +45,6 @@ def add_patient():
 		age = int(input("Age: "))
 	except:
 		print("Age can only be integers. Please try again with the correct value.")
-		return False
 	gender = input("Gender: ")
 	
 	doc_ID = None
@@ -55,7 +54,6 @@ def add_patient():
 			doc_ID = "Doctor ID:", diseasesdf.loc[i, "Doctor_ID"]
 	if doc_ID is None:
 		print("Disease not found.")
-		return False
 
 	date_of_reg = input("Enter the date of registration (DD-MM-YYY) (or leave empty for today's date): ")
 	print("Does the patient require a stay at the hospital? ")
@@ -69,10 +67,9 @@ def add_patient():
 		date_of_reg = datetime.now().strftime("%d-%m-%Y")
 
 	try:
-	datetime.strptime(date_of_reg, "%d-%m-%Y")
+		datetime.strptime(date_of_reg, "%d-%m-%Y")
 	except ValueError:
-    	print("Invalid date format.")
-    	return False
+		print("Invalid date format.")
 
 	new_patient = {
 			"Patient_ID": pid, 
@@ -100,14 +97,12 @@ def search_patient(pid):
 
 		if patient.empty:
 			print("No patient exists with this patient ID. Please try again.")
-			return False
 
 		patient = df[df["Patient_ID"] == pid]
 		return patient
 
 	except:
 		print("Patient ID does not exist")
-		return False
 
 def delete_patient():
 	df = pd.read_csv(csvpath)
@@ -115,7 +110,6 @@ def delete_patient():
 		pid = int(input("Enter the patient ID for the patient that you want to delete: "))
 	except:
 		print("Patient ID can only be an integer. Please try again with the correct value.")
-		return False
 	print("Are you sure you want to delete patient", pid, "?")
 	response = input("Enter yes or no to continue: ")
 
@@ -128,7 +122,6 @@ def delete_patient():
 		print("Successfully deleted patient", pid)
 	except:
 		print("This patient ID doesn't exist. Please try again.")
-		return False
 
 
 def register_hospital():
@@ -140,7 +133,6 @@ def register_hospital():
 		room_charge = float(input("Enter the room charge for a single day: "))
 	except:
 		print("Room charge can only be a numerical value. Please try again with the correct value.")
-		return False
 
 	hospital_details = {
 			"Name": name, 
@@ -164,7 +156,6 @@ def update_hospital(hospdf):
 		choice = int(input("Enter your choice number: "))
 	except:
 		print("The value can only be an integer. Please try again with the correct value.")
-		return False
 
 	if choice == 1:
 		hospdf['Name'] = input("Enter new name: ")
@@ -175,13 +166,11 @@ def update_hospital(hospdf):
 			hospdf['Contact_Number'] = int(input("Enter new contact number: "))
 		except:
 			print("Contact number can only be an integer value. Please try again with a valid contact number.")
-			return False
 	elif choice == 4:
 		try:
 			hospdf['Room_Charge'] = float(input("Enter new room charge: "))
 		except:
 			print("Room charge can only be a numerical value. Please try again with a valid value.")
-			return False
 	else:
 		print("Please enter a valid choice.")
 
@@ -199,12 +188,10 @@ def register_doctor():
 		contact_num = int(input("Enter the contact number: "))
 	except:
 		print("Contact number can only be an integer value. Please try again with the correct value.")
-		return False
 	try:
 		consult_fee = float(input("Enter the consultation fee taken by this doctor: "))
 	except:
 		print("Consultation fee can only be a numerical value. Please try again with the correct value.")
-		return False
 
 	new_doctor = {
 			"Doctor_ID": doc_id,
@@ -223,13 +210,11 @@ def update_patient():
 		pid = int(input("Enter the Patient ID to Update: "))
 	except:
 		print("Patient ID can only be an integer value. Please try again with the correct value.")
-		return False
 	
 	try:
 		row = df[df["Patient_ID"] == pid].index[0]
 	except:
 		print("This patient ID doesn't exist. Please try again with a valid patient ID.")
-		return False
 
 	print("What do you want to update?")
 	print("Enter the corresponding number to continue.")
@@ -245,7 +230,6 @@ def update_patient():
 		choice = int(input("Enter your choice number: "))
 	except:
 		print("The value can only be an integer. Please try again with the correct value.")
-		return False
 
 	if choice == 1:
 		df.loc[row, "Name"] = input("Enter new name: ")
@@ -271,7 +255,6 @@ def update_patient():
 
 	else:
 		print("Please enter a valid choice.")
-		return False
 
 	df.to_csv(csvpath, index=False)
 
@@ -291,13 +274,11 @@ def update_doctor():
 		choice = int(input("Enter your choice number: "))
 	except:
 		print("The value can only be an integer. Please try again with the correct value.")
-		return False
 
 	try:
 		row = docdf[docdf["Doctor_ID"] == doc_ID].index[0]
 	except:
 		print("This doctor ID doesn't exist. Please try again with a valid doctor ID.")
-		return False
 
 	if choice == 1:
 		docdf.loc[row, "Name"] = input("Enter new name: ")
@@ -313,7 +294,6 @@ def update_doctor():
 
 	else:
 		print("Please enter a valid choice.")
-		return False
 
 	docdf.to_csv(csvpathdoc, index=False)
 
@@ -324,7 +304,6 @@ def delete_doctor():
 		doc_ID = int(input("Enter the doctor ID for the patient that you want to delete: "))
 	except:
 		print("Doctor ID can only be an integer value. Please try again with the correct value.")
-		return False
 	print("Are you sure you want to delete doctor", doc_ID, "?")
 	response = input("Enter yes or no to continue: ")
 
@@ -336,7 +315,6 @@ def delete_doctor():
 		print("Successfully deleted the doctor record,", doc_ID)
 	except:
 		print("This doctor ID doesn't exist. Please try again.")
-		return False
 
 def calc_bill():
 	docdf = pd.read_csv(csvpathdoc)
@@ -347,7 +325,6 @@ def calc_bill():
 		pid = int(input("Enter the patient ID to calculate bill: "))
 	except:
 		print("Please enter a valid integer value as patient ID.")
-		return False
 
 	try:
 		patient = search_patient(pid)
@@ -375,7 +352,6 @@ def calc_bill():
 			room_charge = 0
 	except:
 		print("An error occurred. Please try again with the valid values.")
-		return False
 
 
 	num_of_days = int((today - reg_date).days)
@@ -385,7 +361,6 @@ def calc_bill():
 		medicine_cost = int(input("Enter the medicine cost in numbers only: "))
 	except:
 		print("Please enter a valid numerical value as medicine cost.")
-		return False
 
 	total_bill = consult_fee + total_room_charge + medicine_cost
 
@@ -477,7 +452,6 @@ elif choice == 2:
 		response = int(input("Enter your choice: "))
 	except:
 		print("Please enter a valid integer value. Kindly try again.")
-		return False
 
 	if response == 1:
 		add_patient()
@@ -493,7 +467,6 @@ elif choice == 3:
 		pid = int(input("Enter the patient ID to search: "))
 	except:
 		print("Please enter a valid integer value. Kindly try again.")
-		return False
 	print(search_patient(pid))
 	exit_program()
 elif choice == 4:
@@ -523,7 +496,6 @@ elif choice == 7:
 		response = int(input("Enter your choice: "))
 	except:
 		print("Please enter a valid integer value. Kindly try again.")
-		return False
 
 	if response == 1:
 		register_doctor()
